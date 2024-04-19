@@ -150,6 +150,7 @@ class GetPayRollApiProvider extends ChangeNotifier {
         // Get directory path for saving PDF
         final directory =
             await getExternalStorageDirectory(); // or getApplicationDocumentsDirectory()
+        print(directory);
         final filePath = '${directory!.path}/example.pdf';
 
         // Save PDF file

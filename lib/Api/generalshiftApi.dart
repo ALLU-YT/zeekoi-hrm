@@ -31,7 +31,6 @@ class CheckedIn extends ChangeNotifier {
   List<BirthdayModel> birthdayList = [];
   int totalNumberOfTodayBirthdays = 0;
   String? timeOnly;
-  // LocationData? _locationData;
 
   //Location Accesss
   Future<void> initialize(BuildContext context) async {

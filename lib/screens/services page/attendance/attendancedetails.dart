@@ -28,6 +28,7 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
   Widget build(BuildContext context) {
     return Consumer<AttendanceListApiProvider>(builder: (context, provider, _) {
       final attendanceList = provider.attendanceList;
+      final isEMpty = provider.attendanceList.isEmpty;
       final loading = provider.isLoading;
       return loading
           ? const Center(child: CircularProgressIndicator())
@@ -48,19 +49,23 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
                         _buildDateContainer('Shift'),
                       ],
                     ),
-                    for (var attendanceData in attendanceList)
-                      Row(
-                        children: [
-                          _buildContainer1(attendanceData.date, isDate: true),
-                          _buildContainer2(attendanceData.clockInTime),
-                          _buildContainer4(attendanceData.clockInDelaySec,
-                              isDuration: true),
-                          _buildContainer2(attendanceData.clockOutTime),
-                          _buildContainer4(attendanceData.clockOutEarlySec,
-                              isDuration: true),
-                          _buildContainer(attendanceData.shiftDate),
-                        ],
-                      ),
+                    if (isEMpty) ...{
+                      const Text('No data'),
+                    } else ...{
+                      for (var attendanceData in attendanceList)
+                        Row(
+                          children: [
+                            _buildContainer1(attendanceData.date, isDate: true),
+                            _buildContainer2(attendanceData.clockInTime),
+                            _buildContainer4(attendanceData.clockInDelaySec,
+                                isDuration: true),
+                            _buildContainer2(attendanceData.clockOutTime),
+                            _buildContainer4(attendanceData.clockOutEarlySec,
+                                isDuration: true),
+                            _buildContainer(attendanceData.shiftDate),
+                          ],
+                        ),
+                    }
                   ],
                 ),
               ),

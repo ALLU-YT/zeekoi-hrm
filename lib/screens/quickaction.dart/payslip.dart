@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeekoihrm/Api/getPayrollApiProvider.dart';
-// import 'package:zeekoihrm/Api/getPayrollApiProvider.dart';
-// import 'package:zeekoihrm/provider/getLeaveSumeryProvider.dart';
 import 'package:zeekoihrm/re-use-code.dart/numbercnvttostring.dart';
+// import 'package:zeekoihrm/provider/getLeaveSumeryProvider.dart';
 import 'package:zeekoihrm/screens/quickaction.dart/monthpicker.dart';
 import 'package:zeekoihrm/screens/quickaction.dart/payslipearning.dart';
 
 class PaySlip extends StatefulWidget {
-  const PaySlip({super.key});
+  const PaySlip({Key? key}) : super(key: key);
 
   @override
   State<PaySlip> createState() => _PaySlipState();
@@ -17,7 +16,6 @@ class PaySlip extends StatefulWidget {
 class _PaySlipState extends State<PaySlip> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<GetPayRollApiProvider>(context, listen: false)
         .getPayRollApiProvider(context, context);
@@ -26,6 +24,7 @@ class _PaySlipState extends State<PaySlip> {
   @override
   Widget build(BuildContext context) {
     return Consumer<GetPayRollApiProvider>(builder: (context, provider, _) {
+      final isEmty = provider.payrollList.isEmpty;
       final Loading = provider.isLoading;
       final totalamount =
           provider.amount ?? "0"; // Default value if amount is null
@@ -69,80 +68,98 @@ class _PaySlipState extends State<PaySlip> {
                 const SizedBox(
                   height: 25,
                 ),
-                Loading
-                    ? const Center(
-                        child:
-                            CircularProgressIndicator(), // Show loading indicator
-                      )
-                    : Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * .9,
-                              height: 167,
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  begin: Alignment(0.97, -0.26),
-                                  end: Alignment(-0.97, 0.26),
-                                  colors: [
-                                    Color(0xFF5E00FF),
-                                    Color(0xFFE24D7B)
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(17.65),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'Net Pay',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 13,
-                                        fontFamily: 'Biryani',
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.0,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Text(
-                                      totalamount.toString(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 39,
-                                        fontFamily: 'Biryani',
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.0,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Text(
-                                      convertToWords(totalAmount),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontFamily: 'Biryani',
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.1,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                if (isEmty) ...{
+                  Loading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Container(
+                          width: MediaQuery.of(context).size.width * .9,
+                          height: 167,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              begin: Alignment(0.97, -0.26),
+                              end: Alignment(-0.97, 0.26),
+                              colors: [Color(0xFF5E00FF), Color(0xFFE24D7B)],
                             ),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            const PayslipEarningScreen(),
-                          ],
+                            borderRadius: BorderRadius.circular(17.65),
+                          ),
+                          child: const Center(
+                            child: Text("Payroll not generated,",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                )),
+                          ))
+                } else ...{
+                  Loading
+                      ? const Center(child: CircularProgressIndicator())
+                      : Container(
+                          child: Column(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * .9,
+                                height: 167,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    begin: Alignment(0.97, -0.26),
+                                    end: Alignment(-0.97, 0.26),
+                                    colors: [
+                                      Color(0xFF5E00FF),
+                                      Color(0xFFE24D7B)
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(17.65),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Net Pay',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 13,
+                                          fontFamily: 'Biryani',
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.0,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Text(
+                                        totalamount.toString(),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 39,
+                                          fontFamily: 'Biryani',
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.0,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Text(
+                                        convertToWords(totalAmount),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontFamily: 'Biryani',
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 25,
+                              ),
+                              const PayslipEarningScreen(),
+                            ],
+                          ),
                         ),
-                      ), //..................................
-
-                const SizedBox(
-                  height: 25,
-                ),
+                },
                 const SizedBox(
                   height: 25,
                 ),
@@ -206,6 +223,7 @@ class _PaySlipState extends State<PaySlip> {
     });
   }
 }
+
 // Earnings................................................................
 
 class EarningsScreen extends StatefulWidget {

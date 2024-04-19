@@ -342,57 +342,58 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 25,
               ),
               //Bday Form
-              birthdayList.isEmpty
-                  ? Container(
-                      width: MediaQuery.of(context).size.width * .9,
-                      height: 79,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                              width: 1, color: Color(0xFFE24D7B)),
-                          borderRadius: BorderRadius.circular(19),
+              if (number > 0) ...{
+                Container(
+                  width: MediaQuery.of(context).size.width * .9,
+                  height: 79,
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side:
+                          const BorderSide(width: 1, color: Color(0xFFE24D7B)),
+                      borderRadius: BorderRadius.circular(19),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * .1 - 20,
+                      ),
+                      Image.asset(
+                        'assets/birthday-cake 1 (1).png',
+                        width: 45,
+                        height: 45,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * .1 - 20,
+                      ),
+                      const Text(
+                        'Birthday',
+                        style: TextStyle(
+                          color: Color(0xFFFF004E),
+                          fontSize: 14.54,
+                          fontFamily: 'Biryani',
+                          fontWeight: FontWeight.w700,
+                          height: 0.14,
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .1 - 20,
-                          ),
-                          Image.asset(
-                            'assets/birthday-cake 1 (1).png',
-                            width: 45,
-                            height: 45,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .1 - 20,
-                          ),
-                          const Text(
-                            'Birthday',
-                            style: TextStyle(
-                              color: Color(0xFFFF004E),
-                              fontSize: 14.54,
-                              fontFamily: 'Biryani',
-                              fontWeight: FontWeight.w700,
-                              height: 0.14,
-                            ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .1 + 20,
-                          ),
-                          Text(
-                            '$number Birthdays today!',
-                            style: const TextStyle(
-                              color: Color(0xFF191919),
-                              fontSize: 12,
-                              fontFamily: 'Biryani',
-                              fontWeight: FontWeight.w400,
-                              height: 0.16,
-                            ),
-                          )
-                        ],
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * .1 + 20,
                       ),
-                    )
-                  : Container(),
+                      Text(
+                        '$number Birthdays today!',
+                        style: const TextStyle(
+                          color: Color(0xFF191919),
+                          fontSize: 12,
+                          fontFamily: 'Biryani',
+                          fontWeight: FontWeight.w400,
+                          height: 0.16,
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              } else
+                Container(),
               const SizedBox(
                 height: 25,
               ),
