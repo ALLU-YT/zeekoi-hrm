@@ -30,8 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<UserProfile>(context, listen: false).getMemo();
     Provider.of<CheckedIn>(context, listen: false).CheckClockInorNot();
     Provider.of<CheckedIn>(context, listen: false).getBirthDay();
-    Provider.of<UserProfile>(context, listen: false)
-        .requestFilesAndMediaPermission(context);
   }
 
   @override

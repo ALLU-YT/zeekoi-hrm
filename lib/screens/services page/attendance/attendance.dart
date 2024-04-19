@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:zeekoihrm/Api/generalshiftApi.dart';
 import 'package:zeekoihrm/screens/quickaction.dart/monthpickerAttendance.dart';
@@ -15,6 +16,11 @@ class AttendanceScreen extends StatefulWidget {
 class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   Widget build(BuildContext context) {
+    DateTime today = DateTime.now();
+
+    // Format the date as a string
+    String formattedDate = DateFormat('dd-MM-yyyy').format(today);
+    String dayName = DateFormat('EEEE').format(today);
     return Consumer<CheckedIn>(
       builder: (context, value, child) {
         final timee = value.timeOnly;
@@ -50,11 +56,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     const SizedBox(
                       height: 25,
                     ),
-                    const Row(
+                    Row(
                       children: [
                         Text(
-                          'Monday',
-                          style: TextStyle(
+                          dayName,
+                          style: const TextStyle(
                             color: Color(0xFF1B0044),
                             fontSize: 29,
                             fontFamily: 'Biryani',
@@ -62,10 +68,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             height: 0.05,
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Text(
-                          '12/11/2023',
-                          style: TextStyle(
+                          formattedDate,
+                          style: const TextStyle(
                             color: Color(0xFF1B0044),
                             fontSize: 15,
                             fontFamily: 'Biryani',

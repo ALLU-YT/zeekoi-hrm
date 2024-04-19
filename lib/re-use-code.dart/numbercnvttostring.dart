@@ -1,6 +1,6 @@
 String convertToWords(int number) {
-  if (number == 0) return 'zero';
-  if (number < 0) return 'minus ${convertToWords(-number)}';
+  if (number == 0) return 'Zero';
+  if (number < 0) return 'Minus ${convertToWords(-number)}';
 
   String result = '';
   List<String> units = [
@@ -16,28 +16,28 @@ String convertToWords(int number) {
     'nine'
   ];
   List<String> teens = [
-    'ten',
-    'eleven',
-    'twelve',
-    'thirteen',
-    'fourteen',
-    'fifteen',
-    'sixteen',
-    'seventeen',
-    'eighteen',
-    'nineteen'
+    'Ten',
+    'Eleven',
+    'Twelve',
+    'Thirteen',
+    'Fourteen',
+    'Fifteen',
+    'Sixteen',
+    'Seventeen',
+    'Eighteen',
+    'Nineteen'
   ];
   List<String> tens = [
     '',
     '',
-    'twenty',
-    'thirty',
-    'forty',
-    'fifty',
-    'sixty',
-    'seventy',
-    'eighty',
-    'ninety'
+    'Twenty',
+    'Thirty',
+    'Forty',
+    'Fifty',
+    'Sixty',
+    'Seventy',
+    'Eighty',
+    'Ninety'
   ];
 
   if (number < 10) {
@@ -62,12 +62,12 @@ String convertToWords(int number) {
         '${convertToWords(number ~/ 1000000000)} billion${(number % 1000000000 != 0) ? ' ' : ''}${convertToWords(number % 1000000000)}';
   }
 
-  return result;
+  return result.replaceFirst(result[0], result[0].toUpperCase());
 }
 
 void main() {
   int amount = -12464;
   String amountString = convertToWords(amount);
   print(
-      amountString); // Output: "minus twelve thousand four hundred sixty-four"
+      amountString); // Output: "Minus twelve thousand four hundred sixty-four"
 }

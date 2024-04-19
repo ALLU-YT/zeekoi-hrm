@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:zeekoihrm/Api/LeaveTrakerapi/l.dart';
 
@@ -67,37 +68,21 @@ class _SickLeaveContainerItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const SizedBox(width: 15),
-          Container(
-            width: 48,
-            height: 48,
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                    width: 5, color: Color.fromARGB(255, 53, 249, 4)),
-                borderRadius: BorderRadius.circular(50),
-              ),
-            ),
-            child: Container(
-              width: 58,
-              height: 58,
-              decoration: const ShapeDecoration(
-                color: Color(0xFFD5F6D4),
-                shape: OvalBorder(),
-              ),
-              child: Center(
-                child: Text(
-                  "${approved != null ? approved.toString() : '0'}/$yearValue",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 11,
-                    fontFamily: 'Biryani',
-                    fontWeight: FontWeight.w700,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ),
+          const SizedBox(
+            width: 10,
+          ),
+          CircularPercentIndicator(
+            radius: 30.0,
+            lineWidth: 5.0,
+            percent: (approved != null)
+                ? (approved! * 0.8 + 0.1)
+                : 0.1, // Adjusting the range from 0.1 to 0.9
+            // assuming approved is a double value between 0 and 1
+            center: Text(
+                "${approved != null ? approved.toString() : '0'}/$yearValue",
+                style: const TextStyle(color: Colors.black)),
+            progressColor: Colors.green,
+            backgroundColor: const Color(0xFFD5F6D4),
           ),
           const SizedBox(width: 20),
           Padding(

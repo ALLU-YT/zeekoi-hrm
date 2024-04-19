@@ -4,7 +4,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:slidable_button/slidable_button.dart';
 import 'package:zeekoihrm/Api/LeaveTrakerapi/leaveTracerApiAll.dart';
-
 import 'package:zeekoihrm/screens/bottomnavbar.dart';
 import 'package:zeekoihrm/screens/quickaction.dart/LeaveSession.dart';
 import 'package:zeekoihrm/screens/quickaction.dart/LeaveTypeSheet.dart';
@@ -233,7 +232,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                         Expanded(
                           child: Text(
                             resultsessiondata,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF1D2730),
                               fontSize: 14,
                               fontFamily: 'Poppins',
@@ -243,7 +242,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                         ),
                         const Spacer(),
                         IconButton(
-                            onPressed: openAddExpenseOverlay,
+                            onPressed: openAddExpenseOverlayy,
                             icon: Image.asset(
                               'assets/bxs_up-arrow (1).png',
                               width: 20,
@@ -352,7 +351,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                         Expanded(
                           child: Text(
                             endDate,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF1D2730),
                               fontSize: 14,
                               fontFamily: 'Poppins',
@@ -450,7 +449,9 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                                       listen: false)
                                   .dataConvertbacktoId(result,
                                       resultsessiondata, date, endDate, reason);
-
+                              Provider.of<LeaveTrackerApiAll>(context,
+                                      listen: false)
+                                  .getLeaveTrackerSummery();
                               // Navigate to the LeaveTracker page
                               Navigator.push(
                                 context,
@@ -461,7 +462,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                                         .addPostFrameCallback((_) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        SnackBar(
+                                        const SnackBar(
                                           content:
                                               Text('Apply leave successfully'),
                                         ),
@@ -469,7 +470,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                                     });
 
                                     // Return the page you want to navigate to
-                                    return LeaveTracker();
+                                    return const LeaveTracker();
                                   },
                                 ),
                               );

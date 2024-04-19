@@ -284,20 +284,38 @@ class Screen1 extends StatelessWidget {
                                               ),
                                             ),
                                             const SizedBox(
-                                              height: 20,
+                                              height: 15,
                                             ),
-                                            Text(
-                                              leaveTrackerData.startDate,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontFamily: 'Biryani',
-                                                fontWeight: FontWeight.w300,
-                                                height: 0.13,
-                                              ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  leaveTrackerData.startDate,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Biryani',
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                                const Icon(
+                                                  Icons.horizontal_rule,
+                                                  size: 10,
+                                                ),
+                                                Text(
+                                                  leaveTrackerData.startDate,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Biryani',
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                             const SizedBox(
-                                              height: 15,
+                                              height: 10,
                                             ),
                                             Container(
                                               width: MediaQuery.of(context)
@@ -488,20 +506,38 @@ class Screen2 extends StatelessWidget {
                                               ),
                                             ),
                                             const SizedBox(
-                                              height: 20,
+                                              height: 15,
                                             ),
-                                            Text(
-                                              leaveTrackerData.startDate,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontFamily: 'Biryani',
-                                                fontWeight: FontWeight.w300,
-                                                height: 0.13,
-                                              ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  leaveTrackerData.startDate,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Biryani',
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                                const Icon(
+                                                  Icons.horizontal_rule,
+                                                  size: 10,
+                                                ),
+                                                Text(
+                                                  leaveTrackerData.startDate,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Biryani',
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                             const SizedBox(
-                                              height: 15,
+                                              height: 10,
                                             ),
                                             Container(
                                               width: MediaQuery.of(context)
@@ -692,20 +728,38 @@ class Screen3 extends StatelessWidget {
                                               ),
                                             ),
                                             const SizedBox(
-                                              height: 20,
+                                              height: 15,
                                             ),
-                                            Text(
-                                              leaveTrackerData.startDate,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontFamily: 'Biryani',
-                                                fontWeight: FontWeight.w300,
-                                                height: 0.13,
-                                              ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  leaveTrackerData.startDate,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Biryani',
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                                const Icon(
+                                                  Icons.horizontal_rule,
+                                                  size: 10,
+                                                ),
+                                                Text(
+                                                  leaveTrackerData.startDate,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Biryani',
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                             const SizedBox(
-                                              height: 15,
+                                              height: 10,
                                             ),
                                             Container(
                                               width: MediaQuery.of(context)

@@ -32,6 +32,7 @@ class _LeaveTrackerState extends State<LeaveTracker> {
     return Consumer<LeaveTrackerApiAll>(builder: (context, provider, _) {
       final leavetrackerlist = provider.leavetrackerlist;
       final loading = provider.isLoading;
+
       return WillPopScope(
         onWillPop: () async {
           Navigator.of(context).push(PageTransition(
@@ -117,216 +118,280 @@ class _LeaveTrackerState extends State<LeaveTracker> {
                   const SizedBox(
                     height: 30,
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * .1 - 17,
-                      ),
-
-                      //sickLeave.............................
-                      loading
-                          ? const CircularProgressIndicator()
-                          : const SickLEaveContaiener(),
-                      const SizedBox(
-                        width: 25,
-                      ),
-                    ]),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
                   loading
                       ? const Center(child: CircularProgressIndicator())
-                      : Column(children: [
-                          for (var leaveTrackerData in leavetrackerlist)
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        child: LeavDetail(
-                                            leaveTrackerData: leaveTrackerData),
-                                        type: PageTransitionType.rightToLeft,
-                                        duration:
-                                            const Duration(milliseconds: 300),
-                                        reverseDuration:
-                                            const Duration(milliseconds: 300)));
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                              .1 -
-                                          15,
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                              .8 +
-                                          24,
-                                      height: 110,
-                                      decoration: ShapeDecoration(
-                                        color: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          side: const BorderSide(
-                                              width: 1,
-                                              color: Color(0xFFDB342A)),
-                                          borderRadius:
-                                              BorderRadius.circular(17.65),
-                                        ),
-                                        shadows: const [
-                                          BoxShadow(
-                                            color: Color(0x3F000000),
-                                            blurRadius: 4,
-                                            offset: Offset(0, 2),
-                                            spreadRadius: 0,
-                                          )
-                                        ],
-                                      ),
+                      : Container(
+                          child: Column(
+                            children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(children: [
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * .1 -
+                                            17,
+                                  ),
+
+                                  //sickLeave.............................
+                                  const SickLEaveContaiener(),
+                                  const SizedBox(
+                                    width: 25,
+                                  ),
+                                ]),
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              Column(children: [
+                                for (var leaveTrackerData in leavetrackerlist)
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              child: LeavDetail(
+                                                  leaveTrackerData:
+                                                      leaveTrackerData),
+                                              type: PageTransitionType
+                                                  .rightToLeft,
+                                              duration: const Duration(
+                                                  milliseconds: 300),
+                                              reverseDuration: const Duration(
+                                                  milliseconds: 300)));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 0, 0, 15),
                                       child: Row(
                                         children: [
-                                          const SizedBox(
-                                            width: 10,
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .1 -
+                                                15,
                                           ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const SizedBox(
-                                                  height: 25,
-                                                ),
-                                                Text(
-                                                  leaveTrackerData.leaveType,
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 15,
-                                                    fontFamily: 'Biryani',
-                                                    fontWeight: FontWeight.w600,
-                                                    height: 0.11,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Text(
-                                                  leaveTrackerData.startDate,
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    fontFamily: 'Biryani',
-                                                    fontWeight: FontWeight.w300,
-                                                    height: 0.13,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 15,
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      .2,
-                                                  height: 30,
-                                                  decoration: ShapeDecoration(
-                                                    color:
-                                                        const Color(0xFFFFEAE9),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      side: const BorderSide(
-                                                          width: 1,
-                                                          color: Color(
-                                                              0xFFD9302C)),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              11.02),
-                                                    ),
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Center(
-                                                      child: Text(
-                                                        leaveTrackerData.status,
-                                                        style: const TextStyle(
-                                                          color:
-                                                              Color(0xFFD9302C),
-                                                          fontSize: 11,
-                                                          fontFamily: 'Biryani',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .8 +
+                                                24,
+                                            height: 110,
+                                            decoration: ShapeDecoration(
+                                              color: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                side: const BorderSide(
+                                                    width: 1,
+                                                    color: Color(0xFFDB342A)),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        17.65),
+                                              ),
+                                              shadows: const [
+                                                BoxShadow(
+                                                  color: Color(0x3F000000),
+                                                  blurRadius: 4,
+                                                  offset: Offset(0, 2),
+                                                  spreadRadius: 0,
                                                 )
                                               ],
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
                                             child: Row(
                                               children: [
-                                                Column(
-                                                  children: [
-                                                    const SizedBox(
-                                                      height: 40,
-                                                    ),
-                                                    Text(
-                                                      leaveTrackerData
-                                                          .dateDifference
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        color:
-                                                            Color(0xFFD9302C),
-                                                        fontSize: 36.49,
-                                                        fontFamily: 'Biryani',
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        height: 0.04,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 35,
-                                                    ),
-                                                    const Text(
-                                                      'Day(s)',
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 14.59,
-                                                        fontFamily: 'Biryani',
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                        height: 0.11,
-                                                      ),
-                                                    )
-                                                  ],
+                                                const SizedBox(
+                                                  width: 10,
                                                 ),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          .1 -
-                                                      35,
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const SizedBox(
+                                                        height: 25,
+                                                      ),
+                                                      Text(
+                                                        leaveTrackerData
+                                                            .leaveType,
+                                                        style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 15,
+                                                          fontFamily: 'Biryani',
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          height: 0.11,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 15,
+                                                      ),
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            leaveTrackerData
+                                                                .startDate,
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'Biryani',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                            ),
+                                                          ),
+                                                          const Icon(
+                                                            Icons
+                                                                .horizontal_rule,
+                                                            size: 10,
+                                                          ),
+                                                          Text(
+                                                            leaveTrackerData
+                                                                .startDate,
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'Biryani',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            .2,
+                                                        height: 30,
+                                                        decoration:
+                                                            ShapeDecoration(
+                                                          color: const Color(
+                                                              0xFFFFEAE9),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            side: const BorderSide(
+                                                                width: 1,
+                                                                color: Color(
+                                                                    0xFFD9302C)),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        11.02),
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Center(
+                                                            child: Text(
+                                                              leaveTrackerData
+                                                                  .status,
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Color(
+                                                                    0xFFD9302C),
+                                                                fontSize: 11,
+                                                                fontFamily:
+                                                                    'Biryani',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                                Image.asset(
-                                                  'assets/bxs_up-arrow.png',
-                                                  width: 20,
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          const SizedBox(
+                                                            height: 40,
+                                                          ),
+                                                          Text(
+                                                            leaveTrackerData
+                                                                .dateDifference
+                                                                .toString(),
+                                                            style:
+                                                                const TextStyle(
+                                                              color: Color(
+                                                                  0xFFD9302C),
+                                                              fontSize: 36.49,
+                                                              fontFamily:
+                                                                  'Biryani',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              height: 0.04,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 35,
+                                                          ),
+                                                          const Text(
+                                                            'Day(s)',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 14.59,
+                                                              fontFamily:
+                                                                  'Biryani',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              height: 0.11,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                .1 -
+                                                            35,
+                                                      ),
+                                                      Image.asset(
+                                                        'assets/bxs_up-arrow.png',
+                                                        width: 20,
+                                                      )
+                                                    ],
+                                                  ),
                                                 )
                                               ],
                                             ),
-                                          )
+                                          ),
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                        ]),
+                                  ),
+                              ]),
+                            ],
+                          ),
+                        ),
                 ],
               ),
             ],

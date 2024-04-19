@@ -66,11 +66,11 @@ class _SlidableContainerState extends State<SlidableContainer> {
     final updateprovider = Provider.of<AuthProvider>(context);
     if (_currentState == 1) {
       return Consumer<UserProfile>(builder: (context, userprofile, child) {
-        String email = userprofile.email ?? 'Loading...';
-        String fullName = userprofile.fullname ?? 'Loading...';
-        String phonumber = userprofile.mobile ?? 'Null..';
-        String dob = userprofile.dob ?? "Loading...";
-        String gender = userprofile.gender ?? "Loading...";
+        String email = userprofile.email ?? 'Null';
+        String fullName = userprofile.fullname ?? 'Null';
+        String phonumber = userprofile.mobile ?? 'Null';
+        String dob = userprofile.dob ?? "Null";
+        String gender = userprofile.gender ?? "Null";
 
         return Column(
           children: [
@@ -123,10 +123,10 @@ class _SlidableContainerState extends State<SlidableContainer> {
       });
     } else if (_currentState == 2) {
       return Consumer<UserProfile>(builder: (context, userprofile, child) {
-        String basicSalary = userprofile.basicSalary ?? "Loading...";
-        String dob = userprofile.dob ?? "Loading...";
-        String getDepartment = userprofile.department ?? "Loading...";
-        String getDesagination = userprofile.designation ?? "Loading...";
+        String basicSalary = userprofile.basicSalary ?? "Null";
+        String dob = userprofile.dob ?? "Null";
+        String getDepartment = userprofile.department ?? "Null";
+        String getDesagination = userprofile.designation ?? "Null";
         return Column(
           children: [
             Container(
@@ -178,7 +178,7 @@ class _SlidableContainerState extends State<SlidableContainer> {
                 customListTile('assets/deployed_code.png', getDepartment),
                 customListTile('assets/person.png', getDesagination),
                 customListTile(
-                    'assets/account_balance_wallet.png', 'rs $basicSalary'),
+                    'assets/account_balance_wallet.png', basicSalary),
                 customListTile('assets/for_you.png', dob),
               ],
             ),

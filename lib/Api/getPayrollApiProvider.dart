@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-// import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
+// import 'package:html/parser.dart' as parser;
 import 'package:path_provider/path_provider.dart';
 // import 'package:pdf/widgets.dart' as pw;
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zeekoihrm/model/payrollModel.dart';
 
@@ -46,6 +47,9 @@ class GetPayRollApiProvider extends ChangeNotifier {
           payrollList.clear();
           deductionList.clear();
           basicSalary = "0.00";
+          deductionTotal = 0.00;
+          totalAmount = 0.00;
+
           amount = "0.00";
           if (jsonData is List) {
             payrollList =
@@ -112,7 +116,7 @@ class GetPayRollApiProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getPdf(String id1) async {
+  Future<String?> getPdf(id1) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
     String domain = prefs.getString("domain") ?? "";
@@ -126,22 +130,47 @@ class GetPayRollApiProvider extends ChangeNotifier {
       var response = await http.get(url, headers: headers);
 
       if (response.statusCode == 200) {
-        var pdfBytes = response.bodyBytes;
-
-        // Provide the PDF bytes as response for downloading
-        final appDocDir = await getApplicationDocumentsDirectory();
-        final pdfFile = File('${appDocDir.path}/example.pdf');
-        await pdfFile.writeAsBytes(pdfBytes);
-
-        // Open the PDF file
-        OpenFile.open(pdfFile.path);
-        print(pdfFile.path);
+        return response.body; // Return HTML content
       } else {
         print('Request failed with status: ${response.statusCode}');
+        return null; // Return null if request fails
       }
     } catch (e) {
       print('Error: $e');
+      return null; // Return null if error occurs
     }
+  }
+
+  Future<void> downloadAndOpenPdf() async {
+    // Fetch HTML content from API
+    String? htmlContent = await getPdf(id1);
+
+    if (htmlContent != null) {
+      try {
+        // Get directory path for saving PDF
+        final directory =
+            await getExternalStorageDirectory(); // or getApplicationDocumentsDirectory()
+        final filePath = '${directory!.path}/example.pdf';
+
+        // Save PDF file
+        final pdfFile = File(filePath);
+        await pdfFile.writeAsString(htmlContent);
+
+        // Print the path where the PDF is saved
+        print('PDF saved at: $filePath');
+
+        // Open the saved PDF file
+        OpenFile.open(filePath);
+      } catch (e) {
+        print('Error saving or opening PDF: $e');
+      }
+    } else {
+      print('Failed to fetch HTML content');
+    }
+  }
+
+  void main() {
+    downloadAndOpenPdf();
   }
 
   Future<void> fetchData() async {
@@ -153,7 +182,7 @@ class GetPayRollApiProvider extends ChangeNotifier {
       // Fetch data here
 
       // Simulating a delay of 2 seconds
-      await Future.delayed(const Duration(milliseconds: 220));
+      await Future.delayed(const Duration(seconds: 4));
 
       // After fetching data, hide loading indicator
       _isLoading = false;

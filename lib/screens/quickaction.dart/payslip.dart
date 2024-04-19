@@ -69,72 +69,77 @@ class _PaySlipState extends State<PaySlip> {
                 const SizedBox(
                   height: 25,
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * .9,
-                  height: 167,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment(0.97, -0.26),
-                      end: Alignment(-0.97, 0.26),
-                      colors: [Color(0xFF5E00FF), Color(0xFFE24D7B)],
-                    ),
-                    borderRadius: BorderRadius.circular(17.65),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Net Pay',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontFamily: 'Biryani',
-                            fontWeight: FontWeight.w700,
-                            height: 1.0,
-                          ),
+                Loading
+                    ? const Center(
+                        child:
+                            CircularProgressIndicator(), // Show loading indicator
+                      )
+                    : Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * .9,
+                              height: 167,
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  begin: Alignment(0.97, -0.26),
+                                  end: Alignment(-0.97, 0.26),
+                                  colors: [
+                                    Color(0xFF5E00FF),
+                                    Color(0xFFE24D7B)
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(17.65),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Net Pay',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13,
+                                        fontFamily: 'Biryani',
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.0,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      totalamount.toString(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 39,
+                                        fontFamily: 'Biryani',
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.0,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      convertToWords(totalAmount),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontFamily: 'Biryani',
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            const PayslipEarningScreen(),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        Loading
-                            ? const Center(
-                                child:
-                                    CircularProgressIndicator(), // Show loading indicator
-                              )
-                            : Text(
-                                totalamount.toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 39,
-                                  fontFamily: 'Biryani',
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.0,
-                                ),
-                              ),
-                        const SizedBox(height: 20),
-                        Loading
-                            ? const Center(
-                                child:
-                                    CircularProgressIndicator(), // Show loading indicator
-                              )
-                            : Text(
-                                convertToWords(totalAmount),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontFamily: 'Biryani',
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.1,
-                                ),
-                              ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                const PayslipEarningScreen(),
+                      ), //..................................
+
                 const SizedBox(
                   height: 25,
                 ),
@@ -144,7 +149,7 @@ class _PaySlipState extends State<PaySlip> {
                 GestureDetector(
                   onTap: () {
                     Provider.of<GetPayRollApiProvider>(context, listen: false)
-                        .getPdf(id1);
+                        .downloadAndOpenPdf();
                   },
                   child: Container(
                     width: 240,

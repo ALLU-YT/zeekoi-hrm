@@ -24,6 +24,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Provider.of<UserProfile>(context, listen: false).getEmail();
     Provider.of<UserProfile>(context, listen: false).getDepartment();
     Provider.of<UserProfile>(context, listen: false).getDepartment();
+    // Provider.of<UserProfile>(context, listen: false)
+    //     .requestFilesAndMediaPermission(context);
   }
 
   File? selectedImage;

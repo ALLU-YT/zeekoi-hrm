@@ -26,8 +26,6 @@ class _SettingScreenState extends State<SettingScreen> {
     super.initState();
 
     Provider.of<UserProfile>(context, listen: false).getProfile();
-    Provider.of<UserProfile>(context, listen: false)
-        .requestFilesAndMediaPermission(context);
   }
 
   @override
@@ -316,18 +314,16 @@ class _SettingScreenState extends State<SettingScreen> {
                     const Color(0xFFEF4A51), // Set button color to red
                 minimumSize: const Size(100, 50), // Set width and height
               ),
-              child: isLoading
-                  ? const CircularProgressIndicator() // Show circular progress indicator when loading
-                  : const Text(
-                      'Logout',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontFamily: 'Biryani',
-                        fontWeight: FontWeight.w400,
-                        height: 0.14,
-                      ),
-                    ),
+              child: const Text(
+                'Logout',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontFamily: 'Biryani',
+                  fontWeight: FontWeight.w400,
+                  height: 0.14,
+                ),
+              ),
             ),
           ),
         ],

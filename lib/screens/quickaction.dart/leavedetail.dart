@@ -276,37 +276,6 @@ class _LeavDetailState extends State<LeavDetail> {
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width * .2,
-                        height: 30,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFFFEAE9),
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                              width: 1,
-                              color: Color(0xFFD9302C),
-                            ),
-                            borderRadius: BorderRadius.circular(11.02),
-                          ),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                              child: Text(
-                            'Unpaid',
-                            style: TextStyle(
-                                color: Color(0xFFD9302C),
-                                fontSize: 11.01,
-                                fontFamily: 'Biryani',
-                                fontWeight: FontWeight.w600,
-                                height: 1),
-                          )),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * .2,
-                        height: 30,
                         decoration: ShapeDecoration(
                           color: const Color(0xFFFFEAE9),
                           shape: RoundedRectangleBorder(
@@ -318,16 +287,45 @@ class _LeavDetailState extends State<LeavDetail> {
                           ),
                         ),
                         child: const Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(5.0),
+                          child: Center(
+                              child: Text(
+                            'UnPaid',
+                            style: TextStyle(
+                              color: Color(0xFF2F9623),
+                              fontSize: 11.01,
+                              fontFamily: 'Biryani',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * .2,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFFFFEAE9),
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 1,
+                              color: Color(0xFF2F9623),
+                            ),
+                            borderRadius: BorderRadius.circular(11.02),
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(5.0),
                           child: Center(
                               child: Text(
                             'Paid',
                             style: TextStyle(
-                                color: Color(0xFF2F9623),
-                                fontSize: 11.01,
-                                fontFamily: 'Biryani',
-                                fontWeight: FontWeight.w600,
-                                height: .2),
+                              color: Color(0xFF2F9623),
+                              fontSize: 11.01,
+                              fontFamily: 'Biryani',
+                              fontWeight: FontWeight.w600,
+                            ),
                           )),
                         ),
                       ),

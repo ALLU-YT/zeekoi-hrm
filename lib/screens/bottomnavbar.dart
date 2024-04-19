@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:zeekoihrm/provider/bottomsheetfunction.dart';
 import 'package:zeekoihrm/screens/Requests/Requests.dart';
 import 'package:zeekoihrm/screens/home%20page/home.dart';
-import 'package:zeekoihrm/screens/quickaction.dart/applyLeave.dart';
 import 'package:zeekoihrm/screens/services%20page/organization/organization.dart';
 import 'package:zeekoihrm/screens/services%20page/organization/servicesscreen.dart';
 import 'package:zeekoihrm/screens/setting%20page/settingscreen.dart';
@@ -91,78 +90,32 @@ class _NavBarState extends State<NavBar> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Row(
+                          Column(
                             children: [
-                              const SizedBox(
-                                width: 35,
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  context.read<ButtonState>().closeFunction();
-                                  Navigator.of(context).push(PageTransition(
-                                      child: const ApplyLeave(),
-                                      type: PageTransitionType.fade));
-                                },
-                                icon: Image.asset(
-                                  'assets/Frame 3 (2).png',
-                                  width: 40,
-                                ),
-                              ),
-                              const Spacer(),
-                              IconButton(
-                                onPressed: () {
-                                  context.read<ButtonState>().closeFunction();
-                                  Navigator.of(context).push(PageTransition(
-                                      child: const Organization(),
-                                      type: PageTransitionType.fade));
-                                },
-                                icon: Image.asset(
-                                  'assets/Frame 3 (3).png',
-                                  width: 40,
-                                ),
-                              ),
-                              const Spacer(),
-                              IconButton(
-                                onPressed: () {
-                                  context.read<ButtonState>().closeFunction();
-                                  Navigator.of(context).push(PageTransition(
-                                      child: const Organization(),
-                                      type: PageTransitionType.fade));
-                                },
-                                icon: Image.asset(
-                                  'assets/Frame 3 (4).png',
-                                  width: 40,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 40,
+                              Row(
+                                children: [
+                                  const Spacer(),
+                                  IconButton(
+                                    onPressed: () {
+                                      context
+                                          .read<ButtonState>()
+                                          .closeFunction();
+                                      Navigator.of(context).push(PageTransition(
+                                          child: const Organization(),
+                                          type: PageTransitionType.fade));
+                                    },
+                                    icon: Image.asset(
+                                      'assets/Frame 3 (4).png',
+                                      width: 40,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                ],
                               ),
                             ],
                           ),
                           const Row(
                             children: [
-                              SizedBox(
-                                width: 28,
-                              ),
-                              Text(
-                                'Apply Leave',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 10.76,
-                                  fontFamily: 'Biryani',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              Spacer(),
-                              Text(
-                                '    My team',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 10.76,
-                                  fontFamily: 'Biryani',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
                               Spacer(),
                               Text(
                                 'Reporting to',
@@ -173,9 +126,7 @@ class _NavBarState extends State<NavBar> {
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              SizedBox(
-                                width: 37,
-                              ),
+                              Spacer(),
                             ],
                           ),
                         ],
