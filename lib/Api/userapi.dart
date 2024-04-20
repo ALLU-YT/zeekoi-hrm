@@ -5,10 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zeekoihrm/model/birthdaymodel.dart';
 import 'package:zeekoihrm/model/memomodel.dart';
 import 'package:zeekoihrm/model/usermodel.dart';
 
 class UserProfile extends ChangeNotifier {
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  List<void>? todaysBirthdays;
+  List<BirthdayModel> birthdayList = [];
+  int totalNumberOfTodayBirthdays = 0;
+
+  int? userid;
+  int? birthdayid;
+
   String? rFirstName;
   String? rDesagination;
   String? rEmail;
@@ -43,7 +53,8 @@ class UserProfile extends ChangeNotifier {
         User user = User.fromJson(jsonDecode(response.body));
 
         firstName = user.firstName;
-
+        userid = user.id;
+        print('user-id : $userid');
         notifyListeners();
       } else {
         print('Request failed with status: ${response.statusCode}');
@@ -426,6 +437,76 @@ class UserProfile extends ChangeNotifier {
       }
     } catch (e) {
       print('Error: $e');
+    }
+  }
+
+  void getBirthDay() async {
+    _isLoading = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    String domain = prefs.getString("domain") ?? "";
+
+    try {
+      final headers = {
+        'Authorization': "Bearer $accessToken",
+      };
+      Uri url = Uri.parse('$domain/api/dashboard/hrm');
+
+      var response = await http.get(url, headers: headers);
+
+      if (response.statusCode == 200) {
+        dynamic jsonData = jsonDecode(response.body);
+
+        if (jsonData['success'] == true && jsonData.containsKey('data')) {
+          var data = jsonData['data'];
+          if (data is Map<String, dynamic>) {
+            var upcomingBirthdaysJson =
+                data['coming birthdays'] as List<dynamic>;
+            List<BirthdayModel> upcomingBirthdays = upcomingBirthdaysJson
+                .map((json) =>
+                    BirthdayModel.fromJson(json as Map<String, dynamic>))
+                .toList();
+
+            // Process today's birthdays
+            var todayBirthdaysJson = data['today-birthdays'] as List<dynamic>;
+            List<BirthdayModel> todayBirthdays = todayBirthdaysJson
+                .map((json) =>
+                    BirthdayModel.fromJson(json as Map<String, dynamic>))
+                .toList();
+
+            // Calculate the total number of today's birthdays
+            totalNumberOfTodayBirthdays = todayBirthdays.length;
+
+            // Combine upcoming and today's birthdays
+            List<BirthdayModel> allBirthdays = [
+              ...upcomingBirthdays,
+              ...todayBirthdays
+            ];
+
+            // Assign allBirthdays to birthdayList
+            birthdayList = allBirthdays;
+            if (todayBirthdays.isNotEmpty) {
+              birthdayid = todayBirthdays.first.id;
+              print(birthdayid);
+            }
+
+            _isLoading = false;
+            notifyListeners(); // Notify listeners that data has been updated
+
+            // Print today's birthdays
+            // print('Today\'s Birthdays:');
+            // for (var birthday in todayBirthdays) {
+            //   print('Name: ${birthday.id}');
+            //   print('Name: ${birthday.name}');
+            //   print('Email: ${birthday.email}');
+            //   print('Days until birthday: ${birthday.inDays}');
+            //   print('-----------------------------');
+            // }
+          }
+        }
+      }
+    } catch (e) {
+      print('Error fetching or processing birthday data: $e');
     }
   }
 }

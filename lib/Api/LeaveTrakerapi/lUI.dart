@@ -14,16 +14,13 @@ class SickLEaveContaiener extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          for (final leaveSummary in lapiProvider.leaveSummary)
-            for (final userLeave in lapiProvider.userLeave)
-              for (final entry in leaveSummary.leavesSummary.entries)
-                for (final yearData in userLeave.userLeaves.entries)
-                  _SickLeaveContainerItem(
-                    leaveType: entry.key,
-                    approved: entry.value.approved,
-                    value: yearData.value,
-                    year: '',
-                  ),
+          for (final userLeave in lapiProvider.userLeave)
+            for (final entry in userLeave.userLeaves.entries)
+              _SickLeaveContainerItem(
+                id: entry.key, // Assuming entry.key holds the id value
+                value: entry.value,
+                approved: userLeave.leavesSummary[entry.key]?.approved,
+              ),
         ],
       ),
     );
@@ -31,8 +28,7 @@ class SickLEaveContaiener extends StatelessWidget {
 }
 
 class _SickLeaveContainerItem extends StatelessWidget {
-  final String leaveType;
-  final String year;
+  final String id;
   final Map<String, dynamic> value;
   final double? approved;
   final Map<String, String> leaveTypeMap = {
@@ -46,10 +42,9 @@ class _SickLeaveContainerItem extends StatelessWidget {
   };
 
   _SickLeaveContainerItem({
-    required this.leaveType,
-    required this.approved,
+    required this.id,
     required this.value,
-    required this.year,
+    this.approved,
     Key? key,
   }) : super(key: key);
 
@@ -79,8 +74,9 @@ class _SickLeaveContainerItem extends StatelessWidget {
                 : 0.1, // Adjusting the range from 0.1 to 0.9
             // assuming approved is a double value between 0 and 1
             center: Text(
-                "${approved != null ? approved.toString() : '0'}/$yearValue",
-                style: const TextStyle(color: Colors.black)),
+              "${approved != null ? approved.toString() : '0'}/$yearValue",
+              style: const TextStyle(color: Colors.black),
+            ),
             progressColor: Colors.green,
             backgroundColor: const Color(0xFFD5F6D4),
           ),
@@ -88,7 +84,7 @@ class _SickLeaveContainerItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
-              leaveTypeMap[leaveType] ?? '',
+              leaveTypeMap[id] ?? '',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 16,

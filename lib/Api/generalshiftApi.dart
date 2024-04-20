@@ -11,7 +11,7 @@ import 'package:zeekoihrm/model/birthdaymodel.dart';
 import 'package:zeekoihrm/model/checkClockinModel.dart';
 
 class CheckedIn extends ChangeNotifier {
-  bool _isLoading = false;
+  final bool _isLoading = false;
   bool get isLoading => _isLoading;
   Location location = Location();
   bool? _serviceEnabled;
@@ -79,71 +79,6 @@ class CheckedIn extends ChangeNotifier {
     String ipAddress = response.body;
 
     return ipAddress;
-  }
-
-  void getBirthDay() async {
-    _isLoading = true;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String domain = prefs.getString("domain") ?? "";
-
-    try {
-      final headers = {
-        'Authorization': "Bearer $accessToken",
-      };
-      Uri url = Uri.parse('$domain/api/dashboard/hrm');
-
-      var response = await http.get(url, headers: headers);
-
-      if (response.statusCode == 200) {
-        dynamic jsonData = jsonDecode(response.body);
-
-        if (jsonData['success'] == true && jsonData.containsKey('data')) {
-          var data = jsonData['data'];
-          if (data is Map<String, dynamic>) {
-            var upcomingBirthdaysJson =
-                data['coming birthdays'] as List<dynamic>;
-            List<BirthdayModel> upcomingBirthdays = upcomingBirthdaysJson
-                .map((json) =>
-                    BirthdayModel.fromJson(json as Map<String, dynamic>))
-                .toList();
-
-            // Process today's birthdays
-            var todayBirthdaysJson = data['today-birthdays'] as List<dynamic>;
-            List<BirthdayModel> todayBirthdays = todayBirthdaysJson
-                .map((json) =>
-                    BirthdayModel.fromJson(json as Map<String, dynamic>))
-                .toList();
-
-            // Calculate the total number of today's birthdays
-            totalNumberOfTodayBirthdays = todayBirthdays.length;
-
-            // Combine upcoming and today's birthdays
-            List<BirthdayModel> allBirthdays = [
-              ...upcomingBirthdays,
-              ...todayBirthdays
-            ];
-
-            // Assign allBirthdays to birthdayList
-            birthdayList = allBirthdays;
-
-            _isLoading = false;
-            notifyListeners(); // Notify listeners that data has been updated
-
-            // Print today's birthdays
-            // print('Today\'s Birthdays:');
-            for (var birthday in todayBirthdays) {
-              print('Name: ${birthday.name}');
-              print('Email: ${birthday.email}');
-              print('Days until birthday: ${birthday.inDays}');
-              print('-----------------------------');
-            }
-          }
-        }
-      }
-    } catch (e) {
-      print('Error fetching or processing birthday data: $e');
-    }
   }
 
   //CheckClockIn or not

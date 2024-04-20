@@ -12,10 +12,7 @@ class Lapi extends ChangeNotifier {
 
   List<LeaveSummaryResponse> userLeave = [];
 
-  List<LeaveSummaryResponse> leaveSummary = [];
-
   get leaveTypeMap => null;
-
   Future<void> getLeaveSummary(String startDate, String endDate) async {
     _isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -39,11 +36,12 @@ class Lapi extends ChangeNotifier {
           LeaveSummaryResponse leaveSummaryResponse =
               LeaveSummaryResponse.fromJson(jsonData);
 
+          // Clear existing data before adding new data
+          userLeave.clear();
+
           // Add to userLeave list
           userLeave.add(leaveSummaryResponse);
 
-          // Add to leaveSummary list
-          leaveSummary.add(leaveSummaryResponse);
           // Print userLeave
           // Map of IDs to leave types
           final Map<String, String> leaveTypeMap = {
@@ -56,7 +54,7 @@ class Lapi extends ChangeNotifier {
             "9": "Earned"
           };
 
-// Print userLeave
+          // Print userLeave
           print('User Leaves:');
           for (var leave in userLeave) {
             print('Success: ${leave.success}');
@@ -66,24 +64,10 @@ class Lapi extends ChangeNotifier {
             });
             print('Leaves Summary:');
             leave.leavesSummary.forEach((key, value) {
+              final approvedValue = value.approved ??
+                  'N/A'; // Get approved value or 'N/A' if not present
               print(
-                  '  Leave Type: ${leaveTypeMap[key]}, Value: ${value.pending}');
-            });
-            print('---------------');
-          }
-
-// Print leaveSummary
-          print('Leave Summary:');
-          for (var leave in leaveSummary) {
-            print('Success: ${leave.success}');
-            print('User Leaves:');
-            leave.userLeaves.forEach((key, value) {
-              print('  Leave Type: ${leaveTypeMap[key]}, Value: $value');
-            });
-            print('Leaves Summary:');
-            leave.leavesSummary.forEach((key, value) {
-              print(
-                  '  Leave Type: ${leaveTypeMap[key]}, approved: ${value.approved}');
+                  '  Leave Type: ${leaveTypeMap[key]}, Approved: $approvedValue');
             });
             print('---------------');
           }

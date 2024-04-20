@@ -136,131 +136,128 @@ class _NavBarState extends State<NavBar> {
           Positioned(
             bottom: 0,
             child: Container(
-              color: const Color.fromARGB(255, 255, 255, 255),
-              width: MediaQuery.of(context).size.width,
-              height: 80,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          OnTapped(0);
-                        },
-                        icon: Image.asset(_selectedImagePath, width: 30),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          OnTapped(1);
-                        },
-                        icon: Image.asset(_selectedImagePath1,
-                            width: 30 // Adjust width dynamically
-                            ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          context.read<ButtonState>().toggleVisibility();
-                        },
-                        icon: Image.asset(
-                            context.watch<ButtonState>().selectedImagePath2,
-                            width: 40),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          OnTapped(3);
-                        },
-                        icon: Image.asset(_selectedImagePath3, width: 30),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          OnTapped(4);
-                        },
-                        icon: Image.asset(_selectedImagePath4, width: 30),
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.08,
-                      ),
-                      Text(
-                        'Home',
-                        style: TextStyle(
-                          color:
-                              _currentIndex == 0 ? Colors.blue : Colors.black,
-                          fontSize: MediaQuery.of(context).size.width *
-                              0.03, // Adjust font size dynamically
-                          fontFamily: 'Biryani',
-                          fontWeight: FontWeight.w700,
-                          height: 0.20,
+                color: const Color.fromARGB(255, 255, 255, 255),
+                width: MediaQuery.of(context).size.width,
+                height: 80,
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            OnTapped(0);
+                          },
+                          icon: Image.asset(_selectedImagePath, width: 30),
                         ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.07,
-                      ),
-                      Text(
-                        'Services',
-                        style: TextStyle(
-                          color:
-                              _currentIndex == 1 ? Colors.blue : Colors.black,
-                          fontSize: MediaQuery.of(context).size.width *
-                              0.03, // Adjust font size dynamically
-                          fontFamily: 'Biryani',
-                          fontWeight: FontWeight.w700,
-                          height: 0.20,
+                        Text(
+                          'Home',
+                          style: TextStyle(
+                            color:
+                                _currentIndex == 0 ? Colors.blue : Colors.black,
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.03, // Adjust font size dynamically
+                            fontFamily: 'Biryani',
+                            fontWeight: FontWeight.w700,
+                            height: 0.20,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.09,
-                      ),
-                      Container(
-                        height: 2,
-                        width: 30,
-                        color: context.read<ButtonState>().isVisible
-                            ? const Color.fromARGB(255, 33, 150, 243)
-                            : const Color.fromARGB(255, 228, 212, 212),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.08,
-                      ),
-                      Text(
-                        'Requests',
-                        style: TextStyle(
-                          color:
-                              _currentIndex == 3 ? Colors.blue : Colors.black,
-                          fontSize: MediaQuery.of(context).size.width *
-                              0.03, // Adjust font size dynamically
-                          fontFamily: 'Biryani',
-                          fontWeight: FontWeight.w700,
-                          height: 0.20,
+                      ],
+                    ),
+                    const Spacer(),
+                    Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            OnTapped(1);
+                          },
+                          icon: Image.asset(_selectedImagePath1,
+                              width: 30 // Adjust width dynamically
+                              ),
                         ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        'Settings',
-                        style: TextStyle(
-                          color:
-                              _currentIndex == 4 ? Colors.blue : Colors.black,
-                          fontSize: MediaQuery.of(context).size.width *
-                              0.03, // Adjust font size dynamically
-                          fontFamily: 'Biryani',
-                          fontWeight: FontWeight.w700,
-                          height: 0.20,
+                        Text(
+                          'Services',
+                          style: TextStyle(
+                            color:
+                                _currentIndex == 1 ? Colors.blue : Colors.black,
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.03, // Adjust font size dynamically
+                            fontFamily: 'Biryani',
+                            fontWeight: FontWeight.w700,
+                            height: 0.20,
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                    ],
-                  )
-                ],
-              ),
-            ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            context.read<ButtonState>().toggleVisibility();
+                          },
+                          icon: Image.asset(
+                              context.watch<ButtonState>().selectedImagePath2,
+                              width: 40),
+                        ),
+                        Container(
+                          height: 2,
+                          width: 30,
+                          color: context.read<ButtonState>().isVisible
+                              ? const Color.fromARGB(255, 33, 150, 243)
+                              : const Color.fromARGB(255, 228, 212, 212),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            OnTapped(3);
+                          },
+                          icon: Image.asset(_selectedImagePath3, width: 30),
+                        ),
+                        Text(
+                          'Requests',
+                          style: TextStyle(
+                            color:
+                                _currentIndex == 3 ? Colors.blue : Colors.black,
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.03, // Adjust font size dynamically
+                            fontFamily: 'Biryani',
+                            fontWeight: FontWeight.w700,
+                            height: 0.20,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            OnTapped(4);
+                          },
+                          icon: Image.asset(_selectedImagePath4, width: 30),
+                        ),
+                        Text(
+                          'Settings',
+                          style: TextStyle(
+                            color:
+                                _currentIndex == 4 ? Colors.blue : Colors.black,
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.03, // Adjust font size dynamically
+                            fontFamily: 'Biryani',
+                            fontWeight: FontWeight.w700,
+                            height: 0.20,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer()
+                  ],
+                )),
           ),
         ],
       ),

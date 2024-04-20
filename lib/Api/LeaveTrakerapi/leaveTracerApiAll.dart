@@ -62,7 +62,9 @@ class LeaveTrackerApiAll extends ChangeNotifier {
             // Print the difference
             // print(
             //     'ID: ${data.id}, User: ${data.user}, Leave Type: ${data.leaveType}, Date Difference: ${difference.inDays} days');
-            data.dateDifference = difference.inDays;
+            data.dateDifference =
+                difference.inDays + 1; // Adding 1 to the date difference
+
             // print('-----------------------------');
           }
 

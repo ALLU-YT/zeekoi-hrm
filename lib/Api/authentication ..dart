@@ -155,8 +155,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
     // Show a confirmation dialog
     bool confirmLogout = await showDialog(
       context: context,
@@ -185,19 +183,19 @@ class AuthProvider extends ChangeNotifier {
     );
 
     if (confirmLogout == true) {
-      await prefs.clear(); // Clear SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.remove(
+          'access_token'); // Remove 'access_token' from SharedPreferences
       // Clear application data (only available on Android and iOS)
       if (Platform.isAndroid || Platform.isIOS) {
-        await Future.delayed(const Duration(
-            seconds:
-                1)); // Delay for a second to ensure dialog closes before clearing data
-        Platform.isAndroid
-            ? await Process.run('pm', [
-                'clear',
-                'your_app_package_name'
-              ]) // Replace 'your_app_package_name' with your actual package name
-            : await Process.run('xcrun',
-                ['simctl', 'erase', 'all']); // Erase simulator data for iOS
+        await Future.delayed(const Duration(seconds: 1));
+        if (Platform.isAndroid) {
+          // Replace 'your_app_package_name' with your actual package name
+          await Process.run('pm', ['clear', 'your_app_package_name']);
+        } else {
+          // Erase simulator data for iOS
+          await Process.run('xcrun', ['simctl', 'erase', 'all']);
+        }
       }
 
       // Show a snack bar after logout

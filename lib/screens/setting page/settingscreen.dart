@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zeekoihrm/Api/authentication%20..dart';
 import 'package:zeekoihrm/Api/userapi.dart';
 import 'package:zeekoihrm/provider/cameraaccess_provider.dart';
-import 'package:zeekoihrm/screens/loginpages/loginpage_indexScreen.dart';
+import 'package:zeekoihrm/screens/loginpages/loginpage_screen6.dart';
 import 'package:zeekoihrm/screens/notificationScreen.dart';
 import 'package:zeekoihrm/screens/profilepages/profilescreen.dart';
 import 'package:zeekoihrm/screens/setting%20page/about_screen.dart';
@@ -304,7 +304,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const LoginPage_indexScreen(),
+                    builder: (context) => const LoginPage6Screen(),
                   ),
                   (route) => false, // Remove all routes from stack
                 );

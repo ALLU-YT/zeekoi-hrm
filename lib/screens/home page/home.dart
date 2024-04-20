@@ -29,15 +29,18 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<UserProfile>(context, listen: false).getProfile();
     Provider.of<UserProfile>(context, listen: false).getMemo();
     Provider.of<CheckedIn>(context, listen: false).CheckClockInorNot();
-    Provider.of<CheckedIn>(context, listen: false).getBirthDay();
+    Provider.of<UserProfile>(context, listen: false).getFirstName();
+    Provider.of<UserProfile>(context, listen: false).getBirthDay();
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<CheckedIn>(context, listen: false);
+    final provider = Provider.of<UserProfile>(context, listen: false);
+    final birthday = provider.birthdayid;
+    final userbirhda = provider.userid;
 
-    provider.getBirthDay();
-
+    print(birthday);
+    print(userbirhda);
     final birthdayList = provider.birthdayList;
     int number = provider.totalNumberOfTodayBirthdays;
     print(number);
@@ -443,6 +446,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         height: 20,
                       ),
+                      if (provider.userid == provider.birthdayid) ...{
+                        const Text(
+                          'Happy Birthday To You 🎉',
+                          style: TextStyle(
+                            color: Color(0xFFFF004E),
+                            fontSize: 14.54,
+                            fontFamily: 'Biryani',
+                            fontWeight: FontWeight.w700,
+                            height: 0.14,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      } else ...{
+                        Container()
+                      },
                       ListView.builder(
                         itemCount: birthdayList
                             .length, // Use the length of birthdayList
