@@ -28,6 +28,7 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
   Widget build(BuildContext context) {
     return Consumer<AttendanceListApiProvider>(builder: (context, provider, _) {
       final attendanceList = provider.attendanceList;
+
       final isEMpty = provider.attendanceList.isEmpty;
       final loading = provider.isLoading;
       return loading
@@ -62,7 +63,7 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
                             _buildContainer2(attendanceData.clockOutTime),
                             _buildContainer4(attendanceData.clockOutEarlySec,
                                 isDuration: true),
-                            _buildContainer(attendanceData.shiftDate),
+                            _buildContainer(attendanceData.shiftName),
                           ],
                         ),
                     }

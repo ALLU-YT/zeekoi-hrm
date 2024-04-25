@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:zeekoihrm/Api/generalshiftApi.dart';
+import 'package:zeekoihrm/Api/attendancelistApiProvider.dart';
 import 'package:zeekoihrm/screens/quickaction.dart/monthpickerAttendance.dart';
 // import 'package:zeekoihrm/screens/quickaction.dart/payslip.dart';
 import 'package:zeekoihrm/screens/services%20page/attendance/attendancedetails.dart';
@@ -21,9 +21,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     // Format the date as a string
     String formattedDate = DateFormat('dd-MM-yyyy').format(today);
     String dayName = DateFormat('EEEE').format(today);
-    return Consumer<CheckedIn>(
+    return Consumer<AttendanceListApiProvider>(
       builder: (context, value, child) {
-        final timee = value.timeOnly;
         return Scaffold(
           appBar: AppBar(
             title: const Text(
@@ -159,7 +158,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                       TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: timee,
+                                            text: value.clockinTimer,
                                             style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 35,
@@ -183,9 +182,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    const Text(
-                                      '26 April 2024',
-                                      style: TextStyle(
+                                    Text(
+                                      value.clockinDate.toString(),
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 17,
                                         fontFamily: 'Biryani',
@@ -204,19 +203,19 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   const SizedBox(
                                     height: 23,
                                   ),
-                                  const Text.rich(
+                                  Text.rich(
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: '07:30 ',
-                                          style: TextStyle(
+                                          text: value.checkouttime,
+                                          style: const TextStyle(
                                             color: Color(0xFFDB342A),
                                             fontSize: 35,
                                             fontFamily: 'Biryani',
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                        TextSpan(
+                                        const TextSpan(
                                           text: 'PM',
                                           style: TextStyle(
                                             color: Color(0xFFDB342A),
@@ -228,9 +227,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                       ],
                                     ),
                                   ),
-                                  const Text(
-                                    '26 April 2024',
-                                    style: TextStyle(
+                                  Text(
+                                    value.chcekoutDate.toString(),
+                                    style: const TextStyle(
                                       color: Color(0xFFE64237),
                                       fontSize: 17,
                                       fontFamily: 'Biryani',

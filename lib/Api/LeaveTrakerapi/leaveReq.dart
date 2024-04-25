@@ -47,6 +47,8 @@ class LeaveReq extends ChangeNotifier {
             //     'ID: ${data.id}, User: ${data.user}, Leave Type: ${data.leaveType}, Date Difference: ${difference.inDays} days');
             data.dateDifference = difference.inDays;
             // print('-----------------------------');
+            data.dateDifference =
+                difference.inDays + 1; // Adding 1 to the date difference
           }
 
           _isLoading = false;

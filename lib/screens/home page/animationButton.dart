@@ -17,8 +17,6 @@ class AnimationButtonHome extends StatefulWidget {
 }
 
 class _YourWidgetState extends State<AnimationButtonHome> {
-  bool isSlideComplete = true;
-  SlidableButtonPosition buttonState = SlidableButtonPosition.start;
   String result = ''; // Declare a variable to store the result
   String buttonLabel = 'Slide Me';
   String appContent = 'Slide to check In';
@@ -99,10 +97,6 @@ class _YourWidgetState extends State<AnimationButtonHome> {
 
         Center(
       child: HorizontalSlidableButton(
-        autoSlide: true,
-        tristate: true,
-        initialPosition: buttonState,
-        isRestart: false,
         width: MediaQuery.of(context).size.width * 0.7,
         height: 60,
         buttonWidth: 60,
@@ -132,7 +126,6 @@ class _YourWidgetState extends State<AnimationButtonHome> {
               context.read<StopwatchModel>().startTimer();
               print('object');
               getimage();
-              buttonState = SlidableButtonPosition.end;
               result = 'Button is on the right';
               buttonLabel = 'Slide Right';
               appContent = 'Slide to check Out';
@@ -141,7 +134,6 @@ class _YourWidgetState extends State<AnimationButtonHome> {
             } else if (position == SlidableButtonPosition.start) {
               context.read<ChangeGeneralShiftColor>().changeColorblue();
               context.read<StopwatchModel>().disposeTimer();
-              buttonState = SlidableButtonPosition.start;
               getimage2();
               result = 'Button is on the left';
               appContent = 'Slide to check in';

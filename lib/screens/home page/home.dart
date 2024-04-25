@@ -242,9 +242,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: const LeaveTracker(),
                                           type: PageTransitionType.fade,
                                           duration:
-                                              const Duration(milliseconds: 500),
+                                              const Duration(milliseconds: 300),
                                           reverseDuration: const Duration(
-                                              milliseconds: 500)));
+                                              milliseconds: 300)));
                                 },
                                 child: Container(
                                   width:

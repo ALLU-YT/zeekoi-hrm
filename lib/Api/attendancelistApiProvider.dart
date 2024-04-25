@@ -7,6 +7,10 @@ import 'package:zeekoihrm/model/attendanceMode.dart';
 
 class AttendanceListApiProvider extends ChangeNotifier {
   List<AttendanceData> attendanceList = [];
+  String? checkouttime;
+  String? chcekoutDate;
+  String? clockinTimer;
+  String? clockinDate;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   Future<void> getAttendanceList(String year, String month) async {
@@ -21,9 +25,7 @@ class AttendanceListApiProvider extends ChangeNotifier {
       };
       Uri url = Uri.parse(
           '$domain/api/hrm/attendance?start_date=$year-$month-01&end_date=$year-$month-31');
-      print(year);
-      print(month);
-      print(url);
+
       var response = await http.get(url, headers: headers);
       // print('API Response: ${response.body}');
       if (response.statusCode == 200) {
@@ -36,7 +38,30 @@ class AttendanceListApiProvider extends ChangeNotifier {
                   AttendanceData.fromJson(json as Map<String, dynamic>))
               .toList();
 
-          // // Print the fetched attendance data
+          // Assuming attendanceList.first.clockOutTime and attendanceList.first.clockInTime are strings in "yyyy-MM-dd HH:mm:ss" format
+          String clockOutTimeString = attendanceList.first.clockOutTime;
+
+// Parse the string into a DateTime object
+          DateTime clockOutDateTime = DateTime.parse(clockOutTimeString);
+
+// Extract time and date components
+          checkouttime =
+              '${clockOutDateTime.hour.toString().padLeft(2, '0')}:${clockOutDateTime.minute.toString().padLeft(2, '0')}';
+          chcekoutDate =
+              '${clockOutDateTime.year}-${clockOutDateTime.month.toString().padLeft(2, '0')}-${clockOutDateTime.day.toString().padLeft(2, '0')}';
+
+          // Assuming attendanceList.first.clockOutTime and attendanceList.first.clockInTime are strings in "yyyy-MM-dd HH:mm:ss" format
+          String clockOutTimeStringg = attendanceList.first.clockInTime;
+
+// Parse the string into a DateTime object
+          DateTime clockInTimee = DateTime.parse(clockOutTimeStringg);
+
+// Extract time and date components
+          clockinTimer =
+              '${clockInTimee.hour.toString().padLeft(2, '0')}:${clockInTimee.minute.toString().padLeft(2, '0')}';
+          clockinDate =
+              '${clockInTimee.year}-${clockInTimee.month.toString().padLeft(2, '0')}-${clockInTimee.day.toString().padLeft(2, '0')}';
+
           // for (var data in attendanceList) {
           //   print('Date: ${data.date}');
           //   print('Clock In Time: ${data.clockInTime}');
@@ -68,7 +93,7 @@ class AttendanceListApiProvider extends ChangeNotifier {
       // Fetch data here
 
       // Simulating a delay of 2 seconds
-      await Future.delayed(const Duration(milliseconds: 220));
+      await Future.delayed(const Duration(seconds: 3));
 
       // After fetching data, hide loading indicator
       _isLoading = false;

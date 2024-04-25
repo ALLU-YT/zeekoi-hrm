@@ -4,7 +4,7 @@ class AttendanceData {
   final String clockInDelaySec;
   final String clockOutTime;
   final String clockOutEarlySec;
-  final String shiftDate;
+  final String shiftName;
 
   AttendanceData({
     required this.date,
@@ -12,7 +12,7 @@ class AttendanceData {
     required this.clockInDelaySec,
     required this.clockOutTime,
     required this.clockOutEarlySec,
-    required this.shiftDate,
+    required this.shiftName,
   });
 
   factory AttendanceData.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,7 @@ class AttendanceData {
       clockInDelaySec: json['clock_in_delay_sec'] ?? "",
       clockOutTime: json['clock_out_time'] ?? "",
       clockOutEarlySec: json['clock_out_early_sec'] ?? "",
-      shiftDate: json['shift_date'] ?? "Null",
+      shiftName: json['shift_name'] ?? "Null",
     );
   }
 }
