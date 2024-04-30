@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slidable_button/slidable_button.dart';
 import 'package:zeekoihrm/Api/generalshiftApi.dart';
 import 'package:zeekoihrm/provider/changeGeneralShiftColor..dart';
@@ -17,6 +18,36 @@ class AnimationButtonHome extends StatefulWidget {
 }
 
 class _YourWidgetState extends State<AnimationButtonHome> {
+  late SharedPreferences _prefs;
+
+  SlidableButtonPosition buttonPosition = SlidableButtonPosition.start;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadButtonPosition();
+  }
+
+  _loadButtonPosition() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      buttonPosition =
+          SlidableButtonPosition.values[_prefs.getInt('buttonPosition') ?? 0];
+    });
+  }
+
+  _saveButtonPosition(SlidableButtonPosition position) async {
+    setState(() {
+      buttonPosition = position;
+      if (position == SlidableButtonPosition.end) {
+        result = 'Button is at the right';
+      } else {
+        result = 'Button is on the left';
+      }
+    });
+    _prefs.setInt('buttonPosition', position.index);
+  }
+
   String result = ''; // Declare a variable to store the result
   String buttonLabel = 'Slide Me';
   String appContent = 'Slide to check In';
@@ -76,7 +107,7 @@ class _YourWidgetState extends State<AnimationButtonHome> {
 
       if (file?.path != null) {
         provider.clockInfn('clock_in', File(file!.path),
-            await determinePosition(), await getIPAddress());
+            await determinePosition(), await getIPAddress(), context);
       }
     }
 
@@ -88,7 +119,7 @@ class _YourWidgetState extends State<AnimationButtonHome> {
 
       if (file?.path != null) {
         provider.clockInfn('clock_out', File(file!.path),
-            await determinePosition(), await getIPAddress());
+            await determinePosition(), await getIPAddress(), context);
       }
     }
 
@@ -101,6 +132,7 @@ class _YourWidgetState extends State<AnimationButtonHome> {
         height: 60,
         buttonWidth: 60,
         dismissible: false,
+        initialPosition: buttonPosition,
         color: buttonColor2,
         label: Center(child: appImage),
         child: Padding(
@@ -119,6 +151,7 @@ class _YourWidgetState extends State<AnimationButtonHome> {
           ),
         ),
         onChanged: (position) async {
+          _saveButtonPosition(position); // Save button position
           setState(() {
             if (position == SlidableButtonPosition.end) {
               context.read<ChangeGeneralShiftColor>().changeColorToBlack();

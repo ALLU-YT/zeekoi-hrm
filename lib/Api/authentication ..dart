@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zeekoihrm/provider/stopwatchmodelprovider.dart';
 
 class AuthProvider extends ChangeNotifier {
   Future<bool> signin(String username, String password) async {
@@ -186,6 +188,8 @@ class AuthProvider extends ChangeNotifier {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove(
           'access_token'); // Remove 'access_token' from SharedPreferences
+      prefs.remove('buttonPosition');
+      Provider.of<StopwatchModel>(context).disposeTimer();
       // Clear application data (only available on Android and iOS)
       if (Platform.isAndroid || Platform.isIOS) {
         await Future.delayed(const Duration(seconds: 1));

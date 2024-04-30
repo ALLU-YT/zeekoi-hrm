@@ -125,8 +125,8 @@ class CheckedIn extends ChangeNotifier {
     }
   }
 
-  void clockInfn(
-      String clockType, File img, Position position, String ip) async {
+  void clockInfn(String clockType, File img, Position position, String ip,
+      BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
     String domain = prefs.getString("domain") ?? "";
@@ -147,9 +147,46 @@ class CheckedIn extends ChangeNotifier {
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-    print(await response.stream.bytesToString());
-    // check_clock_in();
-    // var data = jsonDecode(await response.stream.bytesToString());
-    // print(data);
+    if (response.statusCode == 200) {
+      // Clock in successful
+      if (clockType == "clock_in") {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Clock In Successful"),
+              content: const Text("You have successfully clocked in."),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } else {
+      // Clock in failed
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Clock out Successfully"),
+            content: const Text("You have successfully clocked out."),
+            actions: <Widget>[
+              TextButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
