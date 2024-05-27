@@ -1,5 +1,6 @@
 import 'package:awesome_ripple_animation/awesome_ripple_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:zeekoihrm/Api/authentication%20..dart';
 import 'package:zeekoihrm/screens/bottomnavbar.dart';
@@ -30,200 +31,214 @@ class _LoginPage6ScreenState extends State<LoginPage6Screen> {
             fit: BoxFit.cover,
           ),
         ),
-        child: ListView(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: screenHeight * .5 + 45,
-                ),
-                SizedBox(
-                  width: screenWidth * 0.9,
-                  height: 45,
-                  child: Container(
-                    decoration: ShapeDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerRight,
-                        end: Alignment.centerLeft,
-                        colors: [
-                          const Color(0xFF2E2F30),
-                          Colors.white.withOpacity(0),
-                        ],
-                      ),
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          width: 0.87,
-                          color: Color(0xFFBFBEBE),
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Enter a valid username";
-                                }
-                                return null;
-                              },
-                              controller: usernameController,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w200),
-                                hintText: "username",
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 2, 0),
+          child: ListView(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: screenHeight * .5 + 45,
                   ),
-                ),
-                SizedBox(height: screenHeight * 0.02),
-                SizedBox(
-                  width: screenWidth * 0.9,
-                  height: 45,
-                  child: Container(
-                    decoration: ShapeDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerRight,
-                        end: Alignment.centerLeft,
-                        colors: [
-                          const Color(0xFF2E2F30),
-                          Colors.white.withOpacity(0),
-                        ],
-                      ),
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          width: 0.87,
-                          color: Color(0xFFBFBEBE),
+                  SizedBox(
+                    width: screenWidth * 0.9,
+                    height: 45,
+                    child: Container(
+                      decoration: ShapeDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                          colors: [
+                            const Color(0xFF2E2F30),
+                            Colors.white.withOpacity(0),
+                          ],
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 0.87,
+                            color: Color(0xFFBFBEBE),
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        children: [
-                          Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            Expanded(
                               child: TextFormField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Enter a valid Password";
-                              }
-                              return null;
-                            },
-                            controller:
-                                passwordController, // You need to provide your own controller
-                            style: const TextStyle(color: Colors.white),
-                            obscureText: _obscureText,
-                            decoration: InputDecoration(
-                              hintStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w200),
-                              hintText: "Password",
-                              border: InputBorder.none,
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Enter a valid username";
+                                  }
+                                  return null;
                                 },
+                                controller: usernameController,
+                                style: const TextStyle(color: Colors.white),
+                                decoration: const InputDecoration(
+                                  hintStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w200),
+                                  hintText: "username",
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
-                          )),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.06,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    String username = usernameController.text.trim();
-                    String password = passwordController.text.trim();
-                    bool singIn = await provider.signin(username, password);
-                    if (singIn) {
-                      // Show circular progress indicator
-                      showDialog(
-                        context: context,
-                        barrierDismissible:
-                            false, // prevents dismissing dialog with tap
-                        builder: (BuildContext context) {
-                          return const Center(
-                            child:
-                                CircularProgressIndicator(), // Circular progress indicator
-                          );
-                        },
-                      );
+                  SizedBox(
+                    height: screenHeight * 0.02,
+                  ),
+                  SizedBox(
+                    width: screenWidth * 0.9,
+                    height: 45,
+                    child: Container(
+                      decoration: ShapeDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                          colors: [
+                            const Color(0xFF2E2F30),
+                            Colors.white.withOpacity(0),
+                          ],
+                        ),
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 0.87,
+                            color: Color(0xFFBFBEBE),
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Enter a valid Password";
+                                  }
+                                  return null;
+                                },
+                                controller: passwordController,
+                                style: const TextStyle(color: Colors.white),
+                                obscureText: _obscureText,
+                                decoration: InputDecoration(
+                                  hintStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w200),
+                                  hintText: "Password",
+                                  border: InputBorder.none,
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _obscureText
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (provider.loginError)
+                    Text(
+                      "Invalid username or password",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  SizedBox(
+                    height: screenHeight * 0.06,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      String username = usernameController.text.trim();
+                      String password = passwordController.text.trim();
+                      bool singIn = await provider.signin(username, password);
+                      if (singIn) {
+                        // Show circular progress indicator
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        );
 
-                      // Navigate to another page after a short delay (for demonstration)
-                      // Replace this with your actual navigation code
-                      await Future.delayed(
-                          const Duration(seconds: 2)); // Simulate delay
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const NavBar()),
-                      );
-                    } else {
-                      // Handle login failure
-                    }
-                  },
-                  child: Center(
-                    child: RippleAnimation(
-                      size: Size(screenWidth * 0.25, screenWidth * 0.25),
-                      key: UniqueKey(),
-                      duration: const Duration(milliseconds: 5000),
-                      ripplesCount: 25,
-                      color: const Color(0x99D1D1D1),
-                      repeat: true,
-                      minRadius: screenWidth *
-                          0.05, // Specify width and height for the size
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(screenWidth * 0.5),
-                        child: Center(
-                          child: Image.asset(
-                            'assets/Group 5308.png',
-                            width: screenWidth * 0.2,
-                            height: screenWidth * 0.2,
+                        // Navigate to another page after a short delay (for demonstration)
+                        await Future.delayed(const Duration(seconds: 2));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NavBar(),
+                          ),
+                        );
+                      } else {
+                        // Handle login failure
+                        setState(() {
+                          provider.loginError = true;
+                        });
+                      }
+                    },
+                    child: Center(
+                      child: RippleAnimation(
+                        size: Size(screenWidth * 0.25, screenWidth * 0.25),
+                        key: UniqueKey(),
+                        duration: const Duration(milliseconds: 5000),
+                        ripplesCount: 25,
+                        color: const Color(0x99D1D1D1),
+                        repeat: true,
+                        minRadius: screenWidth * 0.05,
+                        child: ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * 0.5),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/Group 5308.png',
+                              width: screenWidth * 0.2,
+                              height: screenWidth * 0.2,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.040,
-                ),
-                Text(
-                  'Developed by Zeekoi Enterprise Solutions',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: screenWidth * 0.022,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
+                  SizedBox(
+                    height: screenHeight * 0.040,
                   ),
-                )
-              ],
-            ),
-          ],
+                  Align(
+                    alignment: AlignmentDirectional.center,
+                    child: Text(
+                      'Developed by Zeekoi Enterprise Solutions',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: screenWidth * 0.022,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

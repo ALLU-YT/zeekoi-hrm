@@ -6,8 +6,18 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zeekoihrm/provider/stopwatchmodelprovider.dart';
+import 'package:zeekoihrm/screens/loginpages/loginpage_screen6.dart';
 
 class AuthProvider extends ChangeNotifier {
+  bool _loginError = false;
+
+  bool get loginError => _loginError;
+
+  set loginError(bool value) {
+    _loginError = value;
+    notifyListeners();
+  }
+
   Future<bool> signin(String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token') ?? "";
@@ -16,19 +26,15 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       final headers = {
-        'Authorization': "Bearer $token",
+        'Authorization': 'Basic ' + base64Encode(utf8.encode('$id:$token')),
       };
 
-      print(id);
       final body = {
         'grant_type': 'password',
-        'client_id': id,
-        'client_secret': token,
         'username': username,
         'password': password,
       };
-      print(password);
-      print(username);
+
       final response = await http.post(
         Uri.parse('$domain/oauth/token'),
         headers: headers,
@@ -41,9 +47,9 @@ class AuthProvider extends ChangeNotifier {
         prefs.setString('access_token', accessToken);
 
         return true;
-        // Handle successful sign-in here
       } else {
-        throw Exception('Failed to sign in');
+        print('Failed to sign in: ${response.statusCode}');
+        return false;
       }
     } catch (e) {
       print('Error: $e');
@@ -189,7 +195,7 @@ class AuthProvider extends ChangeNotifier {
       prefs.remove(
           'access_token'); // Remove 'access_token' from SharedPreferences
       prefs.remove('buttonPosition');
-      Provider.of<StopwatchModel>(context).disposeTimer();
+
       // Clear application data (only available on Android and iOS)
       if (Platform.isAndroid || Platform.isIOS) {
         await Future.delayed(const Duration(seconds: 1));
@@ -207,6 +213,13 @@ class AuthProvider extends ChangeNotifier {
         const SnackBar(
           content: Text("Logged out successfully"),
         ),
+      );
+
+      // Navigate to the login screen
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage6Screen()),
+        (route) => false,
       );
     }
   }
