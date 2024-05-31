@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 // import 'package:html/parser.dart' as parser;
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 // import 'package:pdf/widgets.dart' as pw;
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -116,7 +117,7 @@ class GetPayRollApiProvider extends ChangeNotifier {
     }
   }
 
-  Future<String?> getPdf(id1) async {
+  Future<void> downloadAndOpenPdf(String id1) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
     String domain = prefs.getString("domain") ?? "";
@@ -130,48 +131,35 @@ class GetPayRollApiProvider extends ChangeNotifier {
       var response = await http.get(url, headers: headers);
 
       if (response.statusCode == 200) {
-        return response.body; // Return HTML content
+        // Request storage permission
+        var status = await Permission.storage.request();
+        if (status.isGranted) {
+          try {
+            // Get external storage directory
+            final directory = await getExternalStorageDirectory();
+            final filePath = '${directory!.path}/example.pdf';
+
+            // Save PDF file
+            final pdfFile = File(filePath);
+            await pdfFile.writeAsBytes(response.bodyBytes);
+
+            // Print the path where the PDF is saved
+            print('PDF saved at: $filePath');
+
+            // Open the saved PDF file
+            OpenFile.open(filePath);
+          } catch (e) {
+            print('Error saving or opening PDF: $e');
+          }
+        } else {
+          print('Permission denied');
+        }
       } else {
         print('Request failed with status: ${response.statusCode}');
-        return null; // Return null if request fails
       }
     } catch (e) {
       print('Error: $e');
-      return null; // Return null if error occurs
     }
-  }
-
-  Future<void> downloadAndOpenPdf() async {
-    // Fetch HTML content from API
-    String? htmlContent = await getPdf(id1);
-
-    if (htmlContent != null) {
-      try {
-        // Get directory path for saving PDF
-        final directory =
-            await getExternalStorageDirectory(); // or getApplicationDocumentsDirectory()
-        print(directory);
-        final filePath = '${directory!.path}/example.pdf';
-
-        // Save PDF file
-        final pdfFile = File(filePath);
-        await pdfFile.writeAsString(htmlContent);
-
-        // Print the path where the PDF is saved
-        print('PDF saved at: $filePath');
-
-        // Open the saved PDF file
-        OpenFile.open(filePath);
-      } catch (e) {
-        print('Error saving or opening PDF: $e');
-      }
-    } else {
-      print('Failed to fetch HTML content');
-    }
-  }
-
-  void main() {
-    downloadAndOpenPdf();
   }
 
   Future<void> fetchData() async {

@@ -26,6 +26,8 @@ class _PaySlipState extends State<PaySlip> {
     return Consumer<GetPayRollApiProvider>(builder: (context, provider, _) {
       final isEmty = provider.payrollList.isEmpty;
       final Loading = provider.isLoading;
+      final id2 = provider.id1;
+      final id3 = id2.toString();
       final totalamount =
           provider.amount ?? "0"; // Default value if amount is null
       double totalAmountDouble = double.tryParse(totalamount) ?? 0.00;
@@ -166,7 +168,7 @@ class _PaySlipState extends State<PaySlip> {
                 GestureDetector(
                   onTap: () {
                     Provider.of<GetPayRollApiProvider>(context, listen: false)
-                        .downloadAndOpenPdf();
+                        .downloadAndOpenPdf(id3);
                   },
                   child: Container(
                     width: 240,
